@@ -1,28 +1,12 @@
-name: MCX Crude Oil Alert
+name: MCX Crude Oil Indian Price Alert
 
 on:
   workflow_dispatch:
+
   schedule:
-    - cron: "*/10 4-17 * * 1-5"
-
-jobs:
-  alert:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: Install packages
-        run: pip install -r requirements.txt
-
-      - name: Run alert program
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python main.py
+    # Monday–Friday
+    # 09:00 AM–11:30 PM India time
+    # GitHub cron works only in UTC
+    - cron: "*/15 4-17 * * 1-5"
+    - cron: "30 3 * * 1-5"
+    - cron: "0,15,30 18 * * 1-5"
